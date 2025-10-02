@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, defineExpose } from "vue";
 import { jsPDF } from "jspdf";
 import { toast } from "vue3-toastify";
 
@@ -24,7 +24,10 @@ function downloadPdf() {
     // Title
     doc.setFontSize(18);
     doc.setFont(undefined, "bold");
-    const titleLines = doc.splitTextToSize(props.tender.title, pageWidth - margin * 2);
+    const titleLines = doc.splitTextToSize(
+      props.tender.title,
+      pageWidth - margin * 2
+    );
     doc.text(titleLines, margin, y);
     y += titleLines.length * 20;
 
@@ -36,7 +39,10 @@ function downloadPdf() {
     // Description
     doc.setFontSize(12);
     doc.setFont(undefined, "normal");
-    const descLines = doc.splitTextToSize(props.tender.description, pageWidth - margin * 2);
+    const descLines = doc.splitTextToSize(
+      props.tender.description,
+      pageWidth - margin * 2
+    );
     doc.text(descLines, margin, y);
     y += descLines.length * 14 + 12;
 
@@ -54,6 +60,8 @@ function downloadPdf() {
     toast.error("Failed to download tender", { autoClose: 5000 });
   }
 }
+
+defineExpose({ downloadPdf });
 </script>
 
 <template>

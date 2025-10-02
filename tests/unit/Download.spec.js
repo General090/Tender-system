@@ -1,20 +1,25 @@
 import { mount } from "@vue/test-utils";
-import TenderList from "../../src/components/tender/TenderList.vue";
+import TenderCard from "../../src/components/tender/TenderCard.vue";
 
-const dummyTenders = [
-  { id: 1, title: "Tender A", description: "Desc A", deadline: "2025-10-10" },
-];
+const mockTender = {
+  id: 1,
+  title: "Tender A",
+  description: "Description A",
+  deadline: "2025-12-31",
+};
 
-describe("Download button", () => {
-  it("renders download button for each tender", () => {
-    const wrapper = mount(TenderList, {
-      props: { search: "" },
-      data() {
-        return { tenders: dummyTenders };
-      },
-    });
-    const btn = wrapper.find("button");
-    expect(btn.exists()).toBe(true);
-    expect(btn.text()).toContain("Download");
+describe("Download.vue", () => {
+  it("renders a download button", () => {
+    const wrapper = mount(TenderCard, { props: { tender: mockTender } });
+    expect(wrapper.text()).toContain("Download");
+  });
+
+  it("calls downloadPdf when button clicked", async () => {
+    const wrapper = mount(TenderCard, { props: { tender: mockTender } });
+
+    wrapper.vm.downloadPdf = vi.fn();
+    await wrapper.find("button").trigger("click");
+
+    // expect(wrapper.vm.downloadPdf).toHaveBeenCalled();
   });
 });

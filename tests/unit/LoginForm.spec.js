@@ -27,7 +27,6 @@ describe("LoginForm.vue", () => {
     await wrapper.find('input[type="password"]').setValue("password");
     await wrapper.find("form").trigger("submit.prevent");
 
-    // Simulate login
     expect(wrapper.vm.username).toBe("admin");
     expect(wrapper.vm.password).toBe("password");
   });
